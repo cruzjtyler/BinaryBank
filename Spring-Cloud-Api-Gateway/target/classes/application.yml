@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  application:
+      name: APIGateway
+  cloud:
+    gateway:
+      routes:
+        - id: userService
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/userms/**
+        - id: accountService
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/accms/**
+        - id: appointmentService
+          uri: http://localhost:8083/
+          predicates:
+            - Path=/appms/**
+        - id: creditCardService
+          uri: http://localhost:8084/
+          predicates:
+            - Path=/ccms/**
+
+web:
+  cors:
+    allowed-origin: "http://127.0.0.1:5173"
+    allowed-methods: "POST, GET, OPTIONS, DELETE, PUT"
+    allowed-headers: "Origin, X-Api-Key, X-Requested-With, Content-Type, Accept, Authorization"
